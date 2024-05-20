@@ -1,0 +1,45 @@
+'use client';
+
+import Image from 'next/image';
+import React from 'react';
+import logo from '../public/geo_logo.jpeg'
+import { useSession } from 'next-auth/react';
+import { CgProfile } from "react-icons/cg";
+
+const Navbar = () => {
+    const {data:session} = useSession()
+
+    const check = () => {
+        console.log('hi')
+    }
+    return (
+        <div className='px-1 py-1 shadow-lg fixed top-0 z-1000 w-full'>
+            <div className='flex justify-between items-center'>
+                <section className='flex w-[20%] justify-between'>
+                    <div><Image src={logo} alt='logo' className='rounded-xl w-[80px] h-[80px]' /></div>
+                    <div className='w-[60%] items-center flex'>
+                        <ul className='flex w-full justify-between'>
+                            <li className='hover:text-green-700 hover:cursor-pointer font-medium'>Home</li>
+                            <li className='hover:text-green-700 hover:cursor-pointer font-medium'>Favourites</li>
+                        </ul>
+                    </div>
+                </section>
+                <section className=' px-4 py-4 w-[50%] gap-6 flex'>
+                    <div className='flex border bg-gray-100 p-3 w-[70%] rounded-lg gap-2'>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 mt-2 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <input placeholder='Search and Add a Location Marker' required className='text-green-700 bg-transparent w-full text-medium p-2 outline-none' />
+                    </div>
+                        <button className='border-2 rounded-lg p-3 bg-green-700 text-white hover:bg-white hover:text-green-700'>Add Marker</button>
+                </section>
+                <section>
+                    {session?.user ? <Image src={session.user.image!} alt="user profile picture" /> : <CgProfile className='w-[50px] h-[50px]'/>}
+                </section>
+            </div>
+        </div>
+    )
+}
+
+
+export default Navbar
