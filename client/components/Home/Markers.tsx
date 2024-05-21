@@ -8,8 +8,8 @@ const Markers = () => {
         <div><span className='font-semibold'>Latitude:</span> 3'567896747</div>
         <div><span className='font-semibold'>Longitude:</span> 3'567896747</div>
         <div className=' w-full flex items-center justify-center gap-3 mt-2'>
-        <button className='rounded-lg border p-2 bg-green-700 text-white hover:cursor-pointer hover:bg-white hover:text-green-700'>Edit</button>
-        <button className='rounded-lg border p-2 bg-red-700 text-white hover:cursor-pointer hover:bg-white hover:text-red-700'>Delete</button>
+        <button className='rounded-lg border p-2 bg-green-950 text-white hover:cursor-pointer hover:bg-gray-300 hover:text-green-950'>Edit</button>
+        <button className='rounded-lg border p-2 bg-red-950 text-white hover:cursor-pointer hover:bg-gray-300 hover:text-red-950'>Delete</button>
         </div>
     </div>
   )
