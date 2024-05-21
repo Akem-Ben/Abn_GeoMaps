@@ -1,4 +1,5 @@
 "use client";
+import GoogleMap from "@/components/Home/GoogleMap";
 import Markers from "@/components/Home/Markers";
 import RangeSelector from "@/components/Home/RangeSelector";
 import { useSession } from "next-auth/react";
@@ -30,7 +31,9 @@ const Home = () => {
       <RangeSelector />
     </div>
     </div>
-    <div className="bg-green-800 col-span-3 h-screen px-2 py-3">class Two</div>
+    <div className="bg-gray-300 col-span-3 h-screen px-2 py-3">
+      <GoogleMap />
+    </div>
     </div>
   );
 }
