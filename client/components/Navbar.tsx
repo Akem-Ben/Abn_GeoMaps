@@ -1,16 +1,48 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import logo from "../public/geo_logo.jpeg";
 import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
+import { showErrorToast } from "@/utilities/toastify";
+import { getCoordinates } from "@/axios-setup/functions/functions";
 
 const Navbar = () => {
   const { data: session } = useSession();
 
-  const check = () => {
-    console.log("hi");
+  const [fetchData, setFetchData] = useState('')
+  const [loading, setLoading] = useState(false)
+
+
+
+  const findLocation = async(e:any) => {
+    try{
+    e.preventDefault()
+    setLoading(true)
+
+    if(fetchData === ""){
+      setLoading(false)
+      return showErrorToast('Address Required')
+    }
+
+    const dataHolder = await getCoordinates(fetchData)
+
+    console.log('dat', dataHolder)
+
+
+    }catch (error:any) {
+      if (error.response) {
+        console.log(error.response.data);
+        return showErrorToast("Internal Server Error")
+      } else if (error.request) {
+        console.log(error.request);
+        return showErrorToast(error.request)
+      } else {
+        console.log("Error", error.message);
+        return showErrorToast(error.request)
+      }
+    }
   };
 
 //   fixed top-0 z-1000 
@@ -55,11 +87,12 @@ const Navbar = () => {
             <input
               placeholder="Search and Add a Location Marker"
               required
+              onChange={(e)=> setFetchData(e.target.value)}
               className="text-green-700 bg-transparent w-full text-medium p-1 outline-none"
             />
           </div>
-          <button className="border-2 rounded-lg p-3 bg-green-700 text-white hover:bg-white hover:text-green-700">
-            Add Marker
+          <button className="border-2 rounded-lg p-3 bg-green-700 text-white hover:bg-white hover:text-green-700" onClick={findLocation}>
+            {loading ? 'Searching...' : 'Add Marker'}
           </button>
         </section>
         <section>

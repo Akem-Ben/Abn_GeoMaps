@@ -12,7 +12,7 @@ const makeApiGetRequests = async (httpMethod, resourceUrl) => {
         method: httpMethod,
         url: resourceUrl,
     });
-    return response;
+    return response.data;
 };
 exports.makeApiGetRequests = makeApiGetRequests;
 // export const makeApiGetRequests = async (httpMethod: string, resourceUrl: string, headers?: any, params?:any, info?:any) => {
