@@ -12,7 +12,7 @@ const GoogleMap = () => {
     // mapContainerStyle={containerStyle}
     <div>
         <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}>
-            <Map mapContainerStyle={}>
+            <Map>
 
             </Map>
         </LoadScript>
