@@ -11,15 +11,15 @@ const app = express()
 dotenv.config()
 
 //Database
-// connectDB()
+connectDB()
 
 //Middlewares
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 app.use(cookieParser())
 app.use(logger('dev'))
 app.use('/location', locationRoutes)
-app.use(cors())
 
 //Routes
 // app.use('/admin', AdminRoutes)
