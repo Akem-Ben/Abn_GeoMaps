@@ -5,8 +5,6 @@ export const addMarker = async(request:Request,response:Response) => {
     try{
         const {markerName, longitude, latitude} = request.body
 
-        console.log('body', request.body)
-
         const checkMarker = await Marker.findOne({markerName, longitude, latitude})
 
         if(!checkMarker){

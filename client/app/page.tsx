@@ -28,7 +28,7 @@ return (
   <div className="grid grid-cols-4 flex-col">
     <div>
       <div className="bg-gray-100 flex justify-center text-green-700 mt-2 border">
-        Favourites
+        Favourites {markers.length > 0 ? '😊' : '😢'}
       </div>
       {markers.length > 0 ? (
         <div className="h-[500px] bg-gray-100 overflow-y-scroll px-2 py-4 flex gap-4 flex-wrap justify-center items-start">
@@ -44,7 +44,7 @@ return (
           ))}
         </div>
       ) : (
-        <p className="mt-4 p-2">No favourite locations added yet 😊</p>
+        <p className="mt-4 p-2 flex items-center justify-center">No favourite locations added yet 😢</p>
       )}
       <div className="p-3">
         <RangeSelector />

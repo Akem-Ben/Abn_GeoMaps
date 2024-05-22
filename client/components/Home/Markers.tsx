@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
-import { editMarkers, getSingleMarker } from "@/axios-setup/functions/functions";
+import { deleteMarkers, editMarkers, getSingleMarker } from "@/axios-setup/functions/functions";
 import { showErrorToast, showSuccessToast } from "@/utilities/toastify";
 import { MarkerContext } from "@/contexts/markerContext";
+import { LocationContext } from "@/contexts/userLocationContext";
 
 const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -12,6 +13,8 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   const [editLoading, setEditLoading] = useState(false)
 
   const [deleteLoading, setDeleteLoading] = useState(false)
+
+  const {location, setLocation} = useContext(LocationContext)
 
   const [modalMarker, setModalMarker] = useState<any>({
     markerDisplayName: "",
@@ -48,6 +51,15 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
       setLoading(false);
     }
   };
+
+  const locateMarkerOnMap = async() => {
+    try{
+      setLocation({ lat: latitude, lng: longitude })
+      console.log(location)
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   const editMarkerTitle = async(_id:string)=>{
     try{
@@ -92,6 +104,20 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   const deleteMarker = async(_id:string) => {
     try{
       setDeleteLoading(true)
+
+      const deleteCheck = await deleteMarkers(_id)
+
+      if(deleteCheck.status !== 200){
+        setDeleteLoading(false)
+        return showErrorToast(deleteCheck.data.message)
+      }
+
+      setDeleteLoading(false)
+
+      showSuccessToast(deleteCheck.data.message)
+
+      return allUserMarkers()
+      
     }catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
@@ -128,7 +154,7 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
     // <div></div>
     <>
     <div className="bg-gray-300 hover:bg-gray-400 w-[80%] rounded-lg h-[200px] flex flex-col px-2 py-2 gap-2 items-start justify-center">
-    <div className="w-full h-[70%] hover:cursor-pointer px-3 py-2" onClick={() => details(id)}>
+    <div className="w-full h-[70%] hover:cursor-pointer px-3 py-2" onClick={() => locateMarkerOnMap()}>
       <div className="">
         <span className="font-semibold">Title:</span>{" "}
         {markerDisplayName.substr(0, 10) + "..."}

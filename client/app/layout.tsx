@@ -33,10 +33,9 @@ export default function RootLayout({
 
   const [info, setInfo] = useState<any>([]);
 
-  const [markerData, setMarkerData] = useState<any>([])
+  const [markerData, setMarkerData] = useState<any>([]);
 
-  const [markers, setMarkers] = useState<any>([])
-
+  const [markers, setMarkers] = useState<any>([]);
 
   // const [displayData, setDisplayData] = useState<any>([])
 
@@ -49,38 +48,37 @@ export default function RootLayout({
   //    },
   //  ];
 
-  const allUserMarkers = async() => {
-    try{
-    const response = await getAllMarkers()
-    setMarkers(response.data.markers)
-  
-    }catch(error:any){
-      console.log(error)
+  const allUserMarkers = async () => {
+    try {
+      const response = await getAllMarkers();
+      setMarkers(response.data.markers);
+    } catch (error: any) {
+      console.log(error);
       // setMessage('unable to load')
     }
-  }
+  };
 
   const addMarker = async (e: any, data: any) => {
     try {
       e.preventDefault();
       const body = {
         markerName: data.display_name,
-        longitude: Number(data.lat),
-        latitude: Number(data.lon)
-      }
-      const response = await saveMarkers(body)
+        longitude: Number(data.lon),
+        latitude: Number(data.lat),
+      };
+      const response = await saveMarkers(body);
 
-      if(response.status !== 200){
-        setShowModal(false)
-        return showErrorToast(response.data.message)
+      if (response.status !== 200) {
+        setShowModal(false);
+        return showErrorToast(response.data.message);
       }
 
-      allUserMarkers()
+      allUserMarkers();
 
       setLocation({ lat: Number(data.lat), lng: Number(data.lon) });
       setShowModal(false);
-      showSuccessToast(response.data.message)
-      return setMarkerData(data)
+      showSuccessToast(response.data.message);
+      return setMarkerData(data);
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
@@ -105,7 +103,7 @@ export default function RootLayout({
   };
   useEffect(() => {
     getUserLocation();
-    allUserMarkers()
+    allUserMarkers();
   }, []);
 
   // useEffect(() => {
@@ -118,9 +116,17 @@ export default function RootLayout({
           <ToastContainer />
           <InformationContext.Provider value={{ info, setInfo, setShowModal }}>
             <LocationContext.Provider value={{ location, setLocation }}>
-              <MarkerContext.Provider value={{ markerData, setMarkerData, markers, setMarkers, allUserMarkers }}>
-              <Navbar />
-              {children}
+              <MarkerContext.Provider
+                value={{
+                  markerData,
+                  setMarkerData,
+                  markers,
+                  setMarkers,
+                  allUserMarkers,
+                }}
+              >
+                <Navbar />
+                {children}
               </MarkerContext.Provider>
             </LocationContext.Provider>
           </InformationContext.Provider>
@@ -129,7 +135,7 @@ export default function RootLayout({
           <Modal onClose={() => setShowModal(false)}>
             <div className="bg-gray-200 w-full mb-3 h-[400px] overflow-y-scroll p-4">
               <div className="text-green-800 flex justify-center font-bold">
-                Look what we found 😊
+                Look what we found
               </div>
               <div>
                 {info &&
@@ -139,6 +145,12 @@ export default function RootLayout({
                       className="flex bg-gray-400 items-center justify-between p-3 mb-2 border rounded-lg"
                     >
                       <div className="w-[70%] flex">{data.display_name}</div>
+                      <button
+                        onClick={()=> {setLocation({lat: Number(data.lat), lng: Number(data.lon)}), setShowModal(false)}}
+                        className="rounded-lg p-2 bg-green-700 h-[50px] text-white hover:bg-white hover:text-green-700 border"
+                      >
+                        View
+                      </button>
                       <button
                         onClick={(e: any) => addMarker(e, data)}
                         className="rounded-lg p-2 bg-green-700 h-[50px] text-white hover:bg-white hover:text-green-700 border"

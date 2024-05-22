@@ -8,7 +8,6 @@ const markerModel_1 = __importDefault(require("../models/markerModel"));
 const addMarker = async (request, response) => {
     try {
         const { markerName, longitude, latitude } = request.body;
-        console.log('body', request.body);
         const checkMarker = await markerModel_1.default.findOne({ markerName, longitude, latitude });
         if (!checkMarker) {
             let newMarker = await markerModel_1.default.create({ markerName, longitude, latitude, markerDisplayName: markerName });
