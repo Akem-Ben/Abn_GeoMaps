@@ -13,7 +13,7 @@ export const findLocation = async (request: Request, response: Response) => {
         const url = `${process.env.API_URL}/search?q=${address}&api_key=${process.env.API_KEY}`
 
         const addressFinder = await makeApiGetRequests('GET', url)
-
+        
         if(addressFinder.length === 0){
           return response.status(404).json({
             status: `error`,
@@ -21,14 +21,14 @@ export const findLocation = async (request: Request, response: Response) => {
           })
         }
 
-        return response.status(200).json({status: 'Success', data: addressFinder.data})
+        return response.status(200).json({status: 'Success', message: `Location found Successfully`, data: addressFinder})
 
     }catch (error:any) {
         if (error.response) {
-          console.log(error.response.data);
+          console.log('err1', error.response.data);
           return response.status(500).json({status: 'Error', message: "Internal Server Error"})
         } else if (error.request) {
-          console.log(error.request);
+          console.log('err2',error.request);
           return response.status(400).json({status: 'Request error', message: error.request})
         } else {
           console.log("Error", error.message);

@@ -16,15 +16,15 @@ const findLocation = async (request, response) => {
                 message: `Address not found, you can tweak the spellings and try again`
             });
         }
-        return response.status(200).json({ status: 'Success', data: addressFinder.data });
+        return response.status(200).json({ status: 'Success', message: `Location found Successfully`, data: addressFinder });
     }
     catch (error) {
         if (error.response) {
-            console.log(error.response.data);
+            console.log('err1', error.response.data);
             return response.status(500).json({ status: 'Error', message: "Internal Server Error" });
         }
         else if (error.request) {
-            console.log(error.request);
+            console.log('err2', error.request);
             return response.status(400).json({ status: 'Request error', message: error.request });
         }
         else {

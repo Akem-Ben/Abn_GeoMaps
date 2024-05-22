@@ -7,7 +7,7 @@ exports.connectDB = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = async () => {
     try {
-        const conn = mongoose_1.default.connect("mongodb://localhost:27017/abn_geomaps");
+        const conn = mongoose_1.default.connect("mongodb+srv://andaobong:8RhWB1aDgVSAtdr2@cluster0.twfwc1c.mongodb.net/abn_geomaps");
         console.log(`MongoDB connected`);
     }
     catch (err) {

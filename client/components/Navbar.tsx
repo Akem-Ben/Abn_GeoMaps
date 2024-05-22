@@ -1,12 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../public/geo_logo.jpeg";
 import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
 import { showErrorToast } from "@/utilities/toastify";
 import { getCoordinates } from "@/axios-setup/functions/functions";
+import { InformationContext } from "@/contexts/informationContext";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -14,9 +15,10 @@ const Navbar = () => {
   const [fetchData, setFetchData] = useState('')
   const [loading, setLoading] = useState(false)
 
-
+  const {setInfo, setShowModal} = useContext(InformationContext)
 
   const findLocation = async(e:any) => {
+    
     try{
     e.preventDefault()
     setLoading(true)
@@ -26,10 +28,22 @@ const Navbar = () => {
       return showErrorToast('Address Required')
     }
 
-    const dataHolder = await getCoordinates(fetchData)
+    const dataHolder:any = await getCoordinates(fetchData)
 
-    console.log('dat', dataHolder)
+    if(dataHolder.status !== 200){
+      setLoading(false)
+      return showErrorToast(dataHolder.data.message)
+    }
 
+    setInfo(dataHolder.data.data)
+
+    setFetchData('')
+
+    setShowModal(true)
+
+    setLoading(false)
+
+    return
 
     }catch (error:any) {
       if (error.response) {
@@ -87,12 +101,13 @@ const Navbar = () => {
             <input
               placeholder="Search and Add a Location Marker"
               required
+              value={fetchData}
               onChange={(e)=> setFetchData(e.target.value)}
               className="text-green-700 bg-transparent w-full text-medium p-1 outline-none"
             />
           </div>
           <button className="border-2 rounded-lg p-3 bg-green-700 text-white hover:bg-white hover:text-green-700" onClick={findLocation}>
-            {loading ? 'Searching...' : 'Add Marker'}
+            {loading ? 'Searching...' : 'Search for Location'}
           </button>
         </section>
         <section>
