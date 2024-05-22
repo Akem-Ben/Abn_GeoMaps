@@ -8,6 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { showErrorToast } from "@/utilities/toastify";
 import { getCoordinates } from "@/axios-setup/functions/functions";
 import { InformationContext } from "@/contexts/informationContext";
+import { LocationContext } from "@/contexts/userLocationContext";
 
 const Navbar = () => {
   const { data: session } = useSession();
