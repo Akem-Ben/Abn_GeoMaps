@@ -4,9 +4,9 @@ import { LocationContext } from '@/contexts/userLocationContext';
 import { LoadScript, GoogleMap as Map, Marker, MarkerClusterer } from '@react-google-maps/api';
 import React, { useContext } from 'react';
 
-const GoogleMap = (ranger:any) => {
+const GoogleMap = () => {
 
-  const {location} = useContext(LocationContext)
+  const {location, ranger} = useContext(LocationContext)
 
   const {markers} = useContext(MarkerContext)
 
@@ -14,12 +14,13 @@ const GoogleMap = (ranger:any) => {
         width: '100%',
         height: '80vh'
     }
+
   return (
 
 
     <div>
         <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}>
-            <Map mapContainerStyle={containerStyle} center={location} zoom={10}>
+            <Map mapContainerStyle={containerStyle} center={location} zoom={ranger}>
               <Marker position={location}/>
               <MarkerClusterer>
             {(clusterer) =>
