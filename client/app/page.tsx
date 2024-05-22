@@ -1,29 +1,15 @@
 "use client";
-import { getAllMarkers } from "@/axios-setup/functions/functions";
 import GoogleMap from "@/components/Home/GoogleMap";
 import Markers from "@/components/Home/Markers";
 import RangeSelector from "@/components/Home/RangeSelector";
-import Modal from "@/components/Modal/Modal";
 import { MarkerContext } from "@/contexts/markerContext";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
 
 const Home = () => {
-// const {data:session} = useSession();
 
-const [message, setMessage] = useState('')
 const {markers, setMarkers} = useContext(MarkerContext)
 
-// const router = useRouter()
-
-// useEffect(()=>{
-//   if(!session?.user){
-//     router.push('/Login')
-//   }
-// },[session])
 return (
   <div className="grid grid-cols-4 flex-col">
     <div>

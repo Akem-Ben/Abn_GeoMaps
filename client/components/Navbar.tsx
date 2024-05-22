@@ -8,7 +8,6 @@ import { CgProfile } from "react-icons/cg";
 import { showErrorToast } from "@/utilities/toastify";
 import { getCoordinates } from "@/axios-setup/functions/functions";
 import { InformationContext } from "@/contexts/informationContext";
-import { LocationContext } from "@/contexts/userLocationContext";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -59,8 +58,6 @@ const Navbar = () => {
       }
     }
   };
-
-//   fixed top-0 z-1000 
   return (
     <div className="px-1 py-1 bg-white shadow-lg w-full">
       <div className="flex justify-between items-center">
@@ -117,7 +114,6 @@ const Navbar = () => {
           ) : (
             <CgProfile className="w-[50px] h-[50px]" />
           )}
-          {/* <CgProfile className="w-[50px] h-[50px]" /> */}
         </section>
       </div>
     </div>
