@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { SessionProvider } from "next-auth/react";
 import Provider from "./Provider";
 import { useEffect, useState } from "react";
 import { LocationContext } from "../contexts/userLocationContext";
@@ -37,24 +36,12 @@ export default function RootLayout({
 
   const [markers, setMarkers] = useState<any>([]);
 
-  // const [displayData, setDisplayData] = useState<any>([])
-
-  // const buttons3: any = [
-  //    {
-  //      label: "click here to update account details",
-  //      onClick: () => "",
-  //      bg: "#27AE60",
-  //      text: "#FFFFFF",
-  //    },
-  //  ];
-
   const allUserMarkers = async () => {
     try {
       const response = await getAllMarkers();
       setMarkers(response.data.markers);
     } catch (error: any) {
       console.log(error);
-      // setMessage('unable to load')
     }
   };
 
@@ -106,9 +93,6 @@ export default function RootLayout({
     allUserMarkers();
   }, []);
 
-  // useEffect(() => {
-  //   info.length > 0 ? setShowModal(true) : setShowModal(false);
-  // }, [info]);
   return (
     <html lang="en">
       <body className={inter.className}>

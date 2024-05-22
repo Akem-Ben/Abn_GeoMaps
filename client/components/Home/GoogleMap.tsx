@@ -6,9 +6,9 @@ import React, { useContext } from 'react';
 
 const GoogleMap = (ranger:any) => {
 
-  const {location, setLocation} = useContext(LocationContext)
+  const {location} = useContext(LocationContext)
 
-  const {markers, setMarkers} = useContext(MarkerContext)
+  const {markers} = useContext(MarkerContext)
 
     const containerStyle = {
         width: '100%',

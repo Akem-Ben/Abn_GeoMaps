@@ -34,7 +34,7 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
     setEdit('')
     setEditLoading(false)
     setDeleteLoading(false)
-    setLoading(false); // Reset loading state
+    setLoading(false);
     return;
   };
 
@@ -134,9 +134,7 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
 
   useEffect(() => {
     const handleOutsideClick = (event: any) => {
-      // if (modalOpen && modalRef.current && !modalRef.current.contains(event.target)) {
-      //   closeModal();
-      // }
+  
     };
 
     if (modalOpen) {
@@ -151,7 +149,6 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   }, [modalOpen]);
 
   return (
-    // <div></div>
     <>
     <div className="bg-gray-300 hover:bg-gray-400 w-[80%] rounded-lg h-[200px] flex flex-col px-2 py-2 gap-2 items-start justify-center">
     <div className="w-full h-[70%] hover:cursor-pointer px-3 py-2" onClick={() => locateMarkerOnMap()}>
