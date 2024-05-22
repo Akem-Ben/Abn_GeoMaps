@@ -23,6 +23,9 @@ app.use((0, morgan_1.default)('dev'));
 app.use('/location', locationRoutes_1.default);
 //Routes
 // app.use('/admin', AdminRoutes)
+app.get('/', (request, response) => {
+    return response.status(200).json('Welcome to the backend!');
+});
 app.listen(process.env.PORT, () => {
     console.log(`App is listening on port ${process.env.PORT}`);
 });
