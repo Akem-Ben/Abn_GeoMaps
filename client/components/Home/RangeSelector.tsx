@@ -8,7 +8,6 @@ const RangeSelector = () => {
 
 
   useEffect(() => {
-    // Map range (0 to 100) to a suitable zoom level (e.g., 1 to 21)
     const zoomLevel = Math.max(1, Math.min(21, Math.floor(range / 5) + 1));
     setRanger(zoomLevel);
   }, [range, setRanger]);
