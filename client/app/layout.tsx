@@ -36,6 +36,8 @@ export default function RootLayout({
 
   const [markers, setMarkers] = useState<any>([]);
 
+  const [ranger, setRanger] = useState(10)
+
   const allUserMarkers = async () => {
     try {
       const response = await getAllMarkers();
@@ -99,7 +101,7 @@ export default function RootLayout({
         <Provider>
           <ToastContainer />
           <InformationContext.Provider value={{ info, setInfo, setShowModal }}>
-            <LocationContext.Provider value={{ location, setLocation }}>
+            <LocationContext.Provider value={{ location, setLocation, ranger, setRanger }}>
               <MarkerContext.Provider
                 value={{
                   markerData,
