@@ -2,8 +2,9 @@
 import GoogleMap from "@/components/Home/GoogleMap";
 import Markers from "@/components/Home/Markers";
 import RangeSelector from "@/components/Home/RangeSelector";
+import Navbar from "@/components/Navbar";
 import { MarkerContext } from "@/contexts/markerContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 
 const Home = () => {
@@ -11,6 +12,8 @@ const Home = () => {
 const {markers, setMarkers} = useContext(MarkerContext)
 
 return (
+<div className="flex flex-col">
+    <Navbar />
   <div className="grid grid-cols-4 flex-col">
     <div>
       <div className="bg-gray-100 flex justify-center text-green-700 mt-2 border">
@@ -39,6 +42,7 @@ return (
     <div className="bg-gray-300 col-span-3 h-screen px-2 py-6">
       <GoogleMap />
     </div>
+  </div>
   </div>
 );
 

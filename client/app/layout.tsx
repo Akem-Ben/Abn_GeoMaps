@@ -111,7 +111,7 @@ export default function RootLayout({
                   allUserMarkers,
                 }}
               >
-                <Navbar />
+                {/* <Navbar /> */}
                 {children}
               </MarkerContext.Provider>
             </LocationContext.Provider>

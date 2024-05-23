@@ -8,6 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { showErrorToast } from "@/utilities/toastify";
 import { getCoordinates } from "@/axios-setup/functions/functions";
 import { InformationContext } from "@/contexts/informationContext";
+import Link from "next/link";
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -62,20 +63,19 @@ const Navbar = () => {
     <div className="px-1 py-1 bg-white shadow-lg w-full">
       <div className="flex justify-between items-center">
         <section className="flex w-[20%] justify-between">
-          <div>
+          <Link href={'/'}>
+            <div className="hover:cursor-pointer">
             <Image
               src={logo}
               alt="logo"
               className="rounded-xl w-[80px] h-[80px]"
             />
           </div>
+          </Link>
           <div className="w-[60%] items-center flex">
             <ul className="flex w-full justify-between">
               <li className="hover:text-green-700 hover:cursor-pointer font-medium">
                 Home
-              </li>
-              <li className="hover:text-green-700 hover:cursor-pointer font-medium">
-                Favourites
               </li>
             </ul>
           </div>
