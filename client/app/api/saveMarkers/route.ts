@@ -45,7 +45,6 @@ export const POST = async (request: NextRequest) => {
           {
             message: `Marker Successfully Created`,
             confirmNewaMarker,
-            checkMarker,
           },
           { status: 200 }
         );

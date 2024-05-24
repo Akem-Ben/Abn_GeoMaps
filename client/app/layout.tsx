@@ -41,7 +41,10 @@ export default function RootLayout({
   const allUserMarkers = async () => {
     try {
       const response = await getAllMarkers();
-      setMarkers(response.data.markers);
+
+      console.log('res', response)
+
+      setMarkers(response.data.finalMarkers);
     } catch (error: any) {
       console.log(error);
     }

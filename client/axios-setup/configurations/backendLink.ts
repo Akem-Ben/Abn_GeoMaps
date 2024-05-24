@@ -14,7 +14,7 @@ const config = (): Config => {
     if (!cache) {
         cache = Object.freeze({
             secrets: {
-                apiHost: process.env.NEXT_PUBLIC_API_HOST || "https://localhost:3010",
+                apiHost: process.env.NEXT_PUBLIC_API_HOST || "https://localhost:3000",
             },
         });
     }

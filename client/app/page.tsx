@@ -4,13 +4,17 @@ import Markers from "@/components/Home/Markers";
 import RangeSelector from "@/components/Home/RangeSelector";
 import Navbar from "@/components/Navbar";
 import { MarkerContext } from "@/contexts/markerContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 
 const Home = () => {
 
 const {markers, setMarkers} = useContext(MarkerContext)
 
+
+useEffect(()=>{
+  console.log('mar', markers)
+})
 return (
 <div className="flex flex-col">
     <Navbar />
