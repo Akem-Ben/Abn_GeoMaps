@@ -1,38 +1,44 @@
-"use client"
-import { MarkerContext } from '@/contexts/markerContext';
-import { LocationContext } from '@/contexts/userLocationContext';
-import { LoadScript, GoogleMap as Map, Marker, MarkerClusterer } from '@react-google-maps/api';
-import React, { useContext } from 'react';
+"use client";
+import { MarkerContext } from "@/contexts/markerContext";
+import { LocationContext } from "@/contexts/userLocationContext";
+import {
+  LoadScript,
+  GoogleMap as Map,
+  Marker,
+  MarkerClusterer,
+} from "@react-google-maps/api";
+import React, { useContext } from "react";
 
 const GoogleMap = () => {
+  const { location, ranger } = useContext(LocationContext);
 
-  const {location, ranger} = useContext(LocationContext)
+  const { markers } = useContext(MarkerContext);
 
-  const {markers} = useContext(MarkerContext)
-
-    const containerStyle = {
-        width: '100%',
-        height: '80vh'
-    }
+  const containerStyle = {
+    width: "100%",
+    height: "80vh",
+  };
 
   return (
-
-
     <div>
-        <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}>
-            <Map mapContainerStyle={containerStyle} center={location} zoom={ranger}>
-              <Marker position={location}/>
-              <MarkerClusterer>
+      <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY!}>
+        <Map mapContainerStyle={containerStyle} center={location} zoom={ranger}>
+          <Marker position={location} />
+          <MarkerClusterer>
             {(clusterer) =>
-              markers.map((item:any, index:number) => (
-                <Marker key={index} position={{ lat: item.latitude, lng: item.longitude }} clusterer={clusterer} />
+              markers.map((item: any, index: number) => (
+                <Marker
+                  key={index}
+                  position={{ lat: item.latitude, lng: item.longitude }}
+                  clusterer={clusterer}
+                />
               ))
             }
           </MarkerClusterer>
-            </Map>
-        </LoadScript>
+        </Map>
+      </LoadScript>
     </div>
-  )
-}
+  );
+};
 
-export default GoogleMap
+export default GoogleMap;

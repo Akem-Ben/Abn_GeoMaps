@@ -38,7 +38,7 @@ export default function RootLayout({
 
   const [markers, setMarkers] = useState<any>([]);
 
-  const [ranger, setRanger] = useState(10)
+  const [ranger, setRanger] = useState(12)
 
   const allUserMarkers = async () => {
     try {

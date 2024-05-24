@@ -9,12 +9,8 @@ import { useContext, useEffect } from "react";
 
 const Home = () => {
 
-const {markers, setMarkers} = useContext(MarkerContext)
+const {markers} = useContext(MarkerContext)
 
-
-useEffect(()=>{
-  console.log('mar', markers)
-})
 return (
 <div className="flex flex-col">
     <Navbar />
