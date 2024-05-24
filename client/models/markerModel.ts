@@ -1,36 +1,31 @@
-import mongoose, {Schema} from 'mongoose'
+import { Schema } from "mongoose";
 
 export interface IMarker {
-    _id: string,
-    markerName: string,
-    markerDisplayName: string,
-    longitude: number,
-    latitude: number,
+  _id: string;
+  markerName: string;
+  markerDisplayName: string;
+  longitude: number;
+  latitude: number;
 }
 
-const MarkerSchema = new Schema ({
+const Markers = new Schema<IMarker>(
+  {
     markerName: {
-        type: String,
-        require: [true, `Please input location name`]
+      type: String,
     },
     markerDisplayName: {
-        type: String,
-        require: [true, `Please input the display name you want`]
+      type: String,
     },
     longitude: {
-        type: Number,
-        require
+      type: Number,
     },
     latitude: {
-        type: Number,
-        require
-    }
-},
-{
-    timestamps: true
-}
-)
+      type: Number,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const Marker = mongoose.model<IMarker>('Markers', MarkerSchema)
-
-export default Marker
+export default Markers;
