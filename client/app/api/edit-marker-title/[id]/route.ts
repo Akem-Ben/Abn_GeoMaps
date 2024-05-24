@@ -1,12 +1,12 @@
 import { connectDB } from "@/database/database";
 import Markers from "../../../../models/markerModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
 connectDB();
 
 export const PUT = async (
-  request: NextResponse,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
   try {
