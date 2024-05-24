@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../public/geo_logo.jpeg";
 import { useSession } from "next-auth/react";
 import { CgProfile } from "react-icons/cg";
@@ -9,6 +9,7 @@ import { showErrorToast } from "@/utilities/toastify";
 import { getCoordinates } from "@/axios-setup/functions/functions";
 import { InformationContext } from "@/contexts/informationContext";
 import Link from "next/link";
+import {LocationContext} from '@/contexts/userLocationContext';
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -17,6 +18,10 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false)
 
   const {setInfo, setShowModal} = useContext(InformationContext)
+
+  let userLocate = {}
+
+  const {setLocation} = useContext(LocationContext)
 
   const findLocation = async(e:any) => {
     
@@ -59,6 +64,23 @@ const Navbar = () => {
       }
     }
   };
+
+  const getUserLocation = () => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      // setLocation({
+      userLocate = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+        }
+      // });
+    });
+  };
+
+  useEffect(() => {
+    console.log('eer',userLocate)
+    getUserLocation();
+  }, []);
+
   return (
     <div className="px-1 py-1 bg-white shadow-lg w-full">
       <div className="flex justify-between items-center">
@@ -72,12 +94,21 @@ const Navbar = () => {
             />
           </div>
           </Link>
+          <div className="flex">
           <div className="w-[60%] items-center flex">
             <ul className="flex w-full justify-between">
               <li className="hover:text-green-700 hover:cursor-pointer font-medium">
                 Home
               </li>
             </ul>
+          </div>
+          <div className="w-[60%] items-center flex">
+            <ul className="flex w-full justify-between">
+              <li onClick={()=> setLocation(userLocate)} className="hover:text-green-700 hover:cursor-pointer font-medium">
+                My Current Location
+              </li>
+            </ul>
+          </div>
           </div>
         </section>
         <section className=" px-2 py-2 flex w-[50%] gap-6">

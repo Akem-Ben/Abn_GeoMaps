@@ -10,8 +10,20 @@ describe("GET /api/getallmarkers", () => {
     beforeAll(() => {
         // Mock the Markers model
         const mockMarkers = [
-            { _id: "1", markerName: "Marker1", markerDisplayName: "Display1", longitude: 10, latitude: 20, updatedAt: new Date('2023-01-01') },
-            { _id: "2", markerName: "Marker2", markerDisplayName: "Display2", longitude: 30, latitude: 40, updatedAt: new Date('2023-02-01') },
+            { 
+                _id: "1", markerName: "Marker1", 
+            markerDisplayName: "Display1", 
+            longitude: 10, 
+            latitude: 20, 
+            updatedAt: new Date('2023-01-01') 
+        },
+            { 
+                _id: "2", markerName: "Marker2", 
+            markerDisplayName: "Display2", 
+            longitude: 30, 
+            latitude: 40, 
+            updatedAt: new Date('2023-02-01') 
+        },
         ];
         mockFind.mockResolvedValue(mockMarkers);
         mongoose.model.mockReturnValue({ find: mockFind });
@@ -24,8 +36,22 @@ describe("GET /api/getallmarkers", () => {
         const responseData = await response.json();
 
         const expectedMarkers = [
-            { _id: "2", markerName: "Marker2", markerDisplayName: "Display2", longitude: 30, latitude: 40, updatedAt: new Date('2023-02-01') },
-            { _id: "1", markerName: "Marker1", markerDisplayName: "Display1", longitude: 10, latitude: 20, updatedAt: new Date('2023-01-01') },
+            { 
+                _id: "2", 
+            markerName: "Marker2", 
+            markerDisplayName: "Display2", 
+            longitude: 30, 
+            latitude: 40, 
+            updatedAt: new Date('2023-02-01') 
+        },
+            { 
+                _id: "1", 
+            markerName: "Marker1", 
+            markerDisplayName: "Display1", 
+            longitude: 10, 
+            latitude: 20, 
+            updatedAt: new Date('2023-01-01') 
+        },
         ];
 
         expect(responseData.status).toBe("success");

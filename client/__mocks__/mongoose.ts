@@ -1,6 +1,8 @@
-import {Schema} from 'mongoose';
+import { Schema as MongooseSchema } from "mongoose";
 
 const findMock = jest.fn();
+
+const Schema = MongooseSchema;
 
 const mongoose = {
   connect: jest.fn(() => Promise.resolve()),
@@ -12,7 +14,7 @@ const mongoose = {
       find: findMock,
     },
   },
-  Schema: jest.fn(),
+  Schema,
 };
 
 export default mongoose;
