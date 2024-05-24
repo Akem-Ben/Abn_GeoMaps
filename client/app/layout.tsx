@@ -28,6 +28,8 @@ export default function RootLayout({
 }>) {
   const [location, setLocation] = useState<any>([]);
 
+  const [permanentMarker, setPermanentMarker] = useState<any>([]);
+
   const [showModal, setShowModal] = useState(false);
 
   const [info, setInfo] = useState<any>([]);
@@ -36,14 +38,11 @@ export default function RootLayout({
 
   const [markers, setMarkers] = useState<any>([]);
 
-  const [ranger, setRanger] = useState(10)
+  const [ranger, setRanger] = useState(12)
 
   const allUserMarkers = async () => {
     try {
       const response = await getAllMarkers();
-
-      console.log('res', response)
-
       setMarkers(response.data.finalMarkers);
     } catch (error: any) {
       console.log(error);
@@ -91,6 +90,10 @@ export default function RootLayout({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
+      setPermanentMarker({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      })
     });
   };
   useEffect(() => {
@@ -104,7 +107,7 @@ export default function RootLayout({
         <Provider>
           <ToastContainer />
           <InformationContext.Provider value={{ info, setInfo, setShowModal }}>
-            <LocationContext.Provider value={{ location, setLocation, ranger, setRanger }}>
+            <LocationContext.Provider value={{ location, setLocation, ranger, setRanger, permanentMarker }}>
               <MarkerContext.Provider
                 value={{
                   markerData,

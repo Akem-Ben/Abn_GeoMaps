@@ -55,7 +55,6 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   const locateMarkerOnMap = async() => {
     try{
       setLocation({ lat: latitude, lng: longitude })
-      console.log(location)
     }catch(error){
       console.log(error)
     }
@@ -154,19 +153,19 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
     <div className="w-full h-[70%] hover:cursor-pointer px-3 py-2" onClick={() => locateMarkerOnMap()}>
       <div className="">
         <span className="font-semibold">Title:</span>{" "}
-        {markerDisplayName.substr(0, 10) + "..."}
+        {markerDisplayName && markerDisplayName.substr(0, 10) + "..."}
       </div>
       <div>
         <span className="font-semibold">Location:</span>{" "}
-        {markerName.substr(0, 10) + "..."}
+        {markerName && markerName.substr(0, 10) + "..."}
       </div>
       <div>
         <span className="font-semibold">Latitude:</span>{" "}
-        {`${latitude.toString().substr(0, 11) + "..."}`}
+        {`${latitude && latitude.toString().substr(0, 11) + "..."}`}
       </div>
       <div>
         <span className="font-semibold">Longitude:</span>{" "}
-        {`${longitude.toString().substr(0, 11) + "..."}`}
+        {`${longitude && longitude.toString().substr(0, 11) + "..."}`}
       </div>
 
     </div>

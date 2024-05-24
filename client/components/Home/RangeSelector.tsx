@@ -8,7 +8,7 @@ const RangeSelector = () => {
 
 
   useEffect(() => {
-    const zoomLevel = Math.max(1, Math.min(21, Math.floor(range / 5) + 1));
+    const zoomLevel = Math.max(1, Math.min(21, 21 - Math.floor((100 - range) / 5)));
     setRanger(zoomLevel);
   }, [range, setRanger]);
 
@@ -26,7 +26,7 @@ const RangeSelector = () => {
         onChange={(e) => setRange(parseInt(e.target.value))}
 
       />
-      <label className="font-light text-gray-500 text-[15px]">{ranger * 100} metres</label>
+      <label className="font-light text-gray-500 text-[15px]">{(21 - ranger) * 500} metres</label>
     </div>
   );
 };

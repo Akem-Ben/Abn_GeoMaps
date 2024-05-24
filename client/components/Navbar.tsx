@@ -15,7 +15,10 @@ const Navbar = () => {
   const { data: session } = useSession();
 
   const [fetchData, setFetchData] = useState('')
+
   const [loading, setLoading] = useState(false)
+
+  const {permanentMarker} = useContext(LocationContext)
 
   const {setInfo, setShowModal} = useContext(InformationContext)
 
@@ -65,22 +68,6 @@ const Navbar = () => {
     }
   };
 
-  const getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(function (position) {
-      // setLocation({
-      userLocate = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        }
-      // });
-    });
-  };
-
-  useEffect(() => {
-    console.log('eer',userLocate)
-    getUserLocation();
-  }, []);
-
   return (
     <div className="px-1 py-1 bg-white shadow-lg w-full">
       <div className="flex justify-between items-center">
@@ -104,7 +91,7 @@ const Navbar = () => {
           </div>
           <div className="w-[60%] items-center flex">
             <ul className="flex w-full justify-between">
-              <li onClick={()=> setLocation(userLocate)} className="hover:text-green-700 hover:cursor-pointer font-medium">
+              <li onClick={()=> setLocation(permanentMarker)} className="hover:text-green-700 hover:cursor-pointer font-medium">
                 My Current Location
               </li>
             </ul>
