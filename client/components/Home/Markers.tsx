@@ -55,7 +55,6 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   const locateMarkerOnMap = async() => {
     try{
       setLocation({ lat: latitude, lng: longitude })
-      console.log(location)
     }catch(error){
       console.log(error)
     }
