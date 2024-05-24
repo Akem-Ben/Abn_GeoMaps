@@ -19,7 +19,6 @@ export const GET = async () => {
     return NextResponse.json({
       status: "success",
       message: "All Markers fetched successfully",
-      markers,
       finalMarkers,
     });
   } catch (error: any) {
