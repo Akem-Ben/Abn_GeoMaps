@@ -1,20 +1,30 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Modal from "../Modal/Modal";
-import { deleteMarkers, editMarkers, getSingleMarker } from "@/axios-setup/functions/functions";
+import {
+  deleteMarkers,
+  editMarkers,
+  getSingleMarker,
+} from "@/axios-setup/functions/functions";
 import { showErrorToast, showSuccessToast } from "@/utilities/toastify";
 import { MarkerContext } from "@/contexts/markerContext";
 import { LocationContext } from "@/contexts/userLocationContext";
 
-const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any) => {
+const Markers = ({
+  id,
+  markerDisplayName,
+  markerName,
+  latitude,
+  longitude,
+}: any) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
-  const [editLoading, setEditLoading] = useState(false)
+  const [editLoading, setEditLoading] = useState(false);
 
-  const [deleteLoading, setDeleteLoading] = useState(false)
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const {location, setLocation} = useContext(LocationContext)
+  const { location, setLocation } = useContext(LocationContext);
 
   const [modalMarker, setModalMarker] = useState<any>({
     markerDisplayName: "",
@@ -22,7 +32,7 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
     longitude: 0,
   });
 
-  const {allUserMarkers} = useContext(MarkerContext)
+  const { allUserMarkers } = useContext(MarkerContext);
 
   const [edit, setEdit] = useState("");
 
@@ -31,9 +41,9 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
   const closeModal = () => {
     setModalMarker({ markerDisplayName: "", latitude: 0, longitude: 0 });
     setModalOpen(false);
-    setEdit('')
-    setEditLoading(false)
-    setDeleteLoading(false)
+    setEdit("");
+    setEditLoading(false);
+    setDeleteLoading(false);
     setLoading(false);
     return;
   };
@@ -52,40 +62,42 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
     }
   };
 
-  const locateMarkerOnMap = async() => {
-    try{
-      setLocation({ lat: latitude, lng: longitude })
-    }catch(error){
-      console.log(error)
+  const locateMarkerOnMap = async () => {
+    try {
+      setLocation({ lat: latitude, lng: longitude });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
-  const editMarkerTitle = async(_id:string)=>{
-    try{
-      setEditLoading(true)
+  const editMarkerTitle = async (_id: string) => {
+    try {
+      setEditLoading(true);
 
-      if(edit.length === 0 || edit === ''){
-        setEditLoading(false)
-        return showErrorToast('You need to add a new title if you want to change the title')
+      if (edit.length === 0 || edit === "") {
+        setEditLoading(false);
+        return showErrorToast(
+          "You need to add a new title if you want to change the title"
+        );
       }
 
-      const data = {'title': edit}
+      const data = { title: edit };
 
-      const response = await editMarkers(_id, data)
+      const response = await editMarkers(_id, data);
 
-      if(response.status !== 200){
-        setEditLoading(false)
-        return showErrorToast(response.data.message)
+      if (response.status !== 200) {
+        setEditLoading(false);
+        return showErrorToast(response.data.message);
       }
 
-      setEdit('')
-      setEditLoading(false)
-      setDeleteLoading(false)
+      setEdit("");
+      setEditLoading(false);
+      setDeleteLoading(false);
       const editor = await getSingleMarker(_id);
       setModalMarker(editor.data.marker);
-      showSuccessToast(response.data.message)
+      showSuccessToast(response.data.message);
 
-      return allUserMarkers()
+      return allUserMarkers();
     } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
@@ -98,26 +110,25 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
         return showErrorToast(error.request);
       }
     }
-  }
+  };
 
-  const deleteMarker = async(_id:string) => {
-    try{
-      setDeleteLoading(true)
+  const deleteMarker = async (_id: string) => {
+    try {
+      setDeleteLoading(true);
 
-      const deleteCheck = await deleteMarkers(_id)
+      const deleteCheck = await deleteMarkers(_id);
 
-      if(deleteCheck.status !== 200){
-        setDeleteLoading(false)
-        return showErrorToast(deleteCheck.data.message)
+      if (deleteCheck.status !== 200) {
+        setDeleteLoading(false);
+        return showErrorToast(deleteCheck.data.message);
       }
 
-      setDeleteLoading(false)
+      setDeleteLoading(false);
 
-      showSuccessToast(deleteCheck.data.message)
+      showSuccessToast(deleteCheck.data.message);
 
-      return allUserMarkers()
-      
-    }catch (error: any) {
+      return allUserMarkers();
+    } catch (error: any) {
       if (error.response) {
         console.log(error.response.data);
         return showErrorToast("Internal Server Error");
@@ -129,12 +140,10 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
         return showErrorToast(error.request);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    const handleOutsideClick = (event: any) => {
-  
-    };
+    const handleOutsideClick = () => {};
 
     if (modalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
@@ -149,33 +158,41 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
 
   return (
     <>
-    <div className="bg-gray-300 hover:bg-gray-400 w-[80%] rounded-lg h-[200px] flex flex-col px-2 py-2 gap-2 items-start justify-center">
-    <div className="w-full h-[70%] hover:cursor-pointer px-3 py-2" onClick={() => locateMarkerOnMap()}>
-      <div className="">
-        <span className="font-semibold">Title:</span>{" "}
-        {markerDisplayName && markerDisplayName.substr(0, 10) + "..."}
-      </div>
-      <div>
-        <span className="font-semibold">Location:</span>{" "}
-        {markerName && markerName.substr(0, 10) + "..."}
-      </div>
-      <div>
-        <span className="font-semibold">Latitude:</span>{" "}
-        {`${latitude && latitude.toString().substr(0, 11) + "..."}`}
-      </div>
-      <div>
-        <span className="font-semibold">Longitude:</span>{" "}
-        {`${longitude && longitude.toString().substr(0, 11) + "..."}`}
-      </div>
-
-    </div>
-      <div className=" w-full flex items-center justify-center gap-3 mt-2">
-        <button onClick={()=>details(id)} className="rounded-lg border p-2 bg-green-950 text-white hover:cursor-pointer hover:bg-green-500 hover:text-white">
-          Edit
-        </button>
-        <button onClick={()=> deleteMarker(id)} className="rounded-lg border p-2 bg-red-950 text-white hover:cursor-pointer hover:bg-red-500 hover:text-white">
-          {deleteLoading ? 'Deleting...' : 'Delete'}
-        </button>
+      <div className="bg-gray-300 hover:bg-gray-400 w-[80%] rounded-lg h-[200px] flex flex-col px-2 py-2 gap-2 items-start justify-center">
+        <div
+          className="w-full h-[70%] hover:cursor-pointer px-3 py-2"
+          onClick={() => locateMarkerOnMap()}
+        >
+          <div className="">
+            <span className="font-semibold">Title:</span>{" "}
+            {markerDisplayName && markerDisplayName.substr(0, 10) + "..."}
+          </div>
+          <div>
+            <span className="font-semibold">Location:</span>{" "}
+            {markerName && markerName.substr(0, 10) + "..."}
+          </div>
+          <div>
+            <span className="font-semibold">Latitude:</span>{" "}
+            {`${latitude && latitude.toString().substr(0, 11) + "..."}`}
+          </div>
+          <div>
+            <span className="font-semibold">Longitude:</span>{" "}
+            {`${longitude && longitude.toString().substr(0, 11) + "..."}`}
+          </div>
+        </div>
+        <div className=" w-full flex items-center justify-center gap-3 mt-2">
+          <button
+            onClick={() => details(id)}
+            className="rounded-lg border p-2 bg-green-950 text-white hover:cursor-pointer hover:bg-green-500 hover:text-white"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => deleteMarker(id)}
+            className="rounded-lg border p-2 bg-red-950 text-white hover:cursor-pointer hover:bg-red-500 hover:text-white"
+          >
+            {deleteLoading ? "Deleting..." : "Delete"}
+          </button>
         </div>
       </div>
       {modalOpen && (
@@ -194,8 +211,11 @@ const Markers = ({ id, markerDisplayName, markerName, latitude, longitude }: any
                     onChange={(e) => setEdit(e.target.value)}
                     className="border-2 rounded-lg p-3 w-[60%] flex justify-center items-center"
                   />
-                  <button onClick={()=> editMarkerTitle(id)} className="border-2 border-green-300 hover:bg-white hover:text-green-700 text-white bg-green-700 p-3 rounded-lg">
-                    { editLoading ? 'Changing...' : 'Save Changes'}
+                  <button
+                    onClick={() => editMarkerTitle(id)}
+                    className="border-2 border-green-300 hover:bg-white hover:text-green-700 text-white bg-green-700 p-3 rounded-lg"
+                  >
+                    {editLoading ? "Changing..." : "Save Changes"}
                   </button>
                 </div>
                 <div className="flex gap-3 item-center w-full justify-center items-center mt-4">
