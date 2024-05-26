@@ -52,7 +52,7 @@ export const POST = async (request: NextRequest) => {
 
       return NextResponse.json(
         {
-          message: `Unabe to add marker, Try again`,
+          message: `Unable to add marker, Try again`,
         },
         { status: 400 }
       );
