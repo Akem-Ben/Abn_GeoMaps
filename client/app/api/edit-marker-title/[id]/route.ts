@@ -1,6 +1,6 @@
 import { connectDB } from "@/database/database";
 import Markers from "../../../../models/markerModel";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import mongoose from "mongoose";
 
 connectDB();
